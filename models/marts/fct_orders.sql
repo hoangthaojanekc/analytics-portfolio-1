@@ -11,6 +11,8 @@ final as (
         o.order_id,
         o.user_id,
         o.status,
+        -- Using your new macro here:
+        {{ get_order_status_category('o.status') }} as status_category,
         o.order_created_at,
         u.country as user_country,
         u.age as user_age,
