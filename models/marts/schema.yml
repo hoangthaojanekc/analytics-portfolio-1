@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "One row per order. Joins orders with user demographics."
+    columns:
+      - name: order_id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        description: "Foreign key to stg_users"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_users')
+                field: id
+
+      - name: status
+        description: "The current state of the order"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Complete', 'Cancelled', 'Returned', 'Processing', 'Shipped']
